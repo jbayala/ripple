@@ -21,8 +21,8 @@ rm output/out.csv
 while true; do
 	VALUES=$(rippled --silent --conf conf/rippled.cfg server_info | python3 -c "import sys, json, datetime; data=json.load(sys.stdin); print(datetime.datetime.strptime(data['result']['info']['time'], '%Y-%b-%d %H:%M:%S.%f').strftime('%Y%m%d%H%M%S.%f'),',',data['result']['info']['validated_ledger']['seq'],',','{0:.6f}'.format(datetime.datetime.strptime(data['result']['info']['time'], '%Y-%b-%d %H:%M:%S.%f').timestamp()))")
 
-	echo ${VALUES} | awk -F"," '{print $1,",",$2}' >> output/out.csv
-	echo ${VALUES} >> output/debug.txt
+	echo ${VALUES} | awk -F"," '{print $3,",",$2}' >> output/out.csv
+	#echo ${VALUES} >> output/debug.txt
 	read CURTIME CURSEQ <<< $( echo ${VALUES} | awk -F"," 'gsub(/\./,"",$3){print $3 $2}' )
 
 	if [ $COUNTER -eq 0 ]; then
