@@ -1,0 +1,1 @@
+20200212103354084938 -c import sys, datetime; print(sys.stdin)
